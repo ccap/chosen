@@ -30,7 +30,8 @@ class SelectParser
           options_index: @options_index
           value: option.value
           text: option.text
-          html: option.innerHTML
+          without_description: option.innerHTML
+          html: option.innerHTML + " - " + option.dataset["description"]
           selected: option.selected
           disabled: if group_disabled is true then group_disabled else option.disabled
           group_array_index: group_position

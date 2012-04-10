@@ -53,7 +53,8 @@
             options_index: this.options_index,
             value: option.value,
             text: option.text,
-            html: option.innerHTML,
+            without_description: option.innerHTML,
+            html: option.innerHTML + " - " + option.dataset["description"],
             selected: option.selected,
             disabled: group_disabled === true ? group_disabled : option.disabled,
             group_array_index: group_position,
@@ -130,7 +131,8 @@ Copyright (c) 2011 by Harvest
       this.allow_single_deselect = (this.options.allow_single_deselect != null) && (this.form_field.options[0] != null) && this.form_field.options[0].text === "" ? this.options.allow_single_deselect : false;
       this.disable_search_threshold = this.options.disable_search_threshold || 0;
       this.choices = 0;
-      return this.results_none_found = this.options.no_results_text || "No results match";
+      this.results_none_found = this.options.no_results_text || "No results match";
+      return this.higlight_matched_text = this.options.highlight_matched_text != null ? this.options.highlight_matched_text : true;
     };
 
     AbstractChosen.prototype.mouse_enter = function() {
@@ -631,7 +633,7 @@ Copyright (c) 2011 by Harvest
         _this = this;
       choice_id = this.container_id + "_c_" + item.array_index;
       this.choices += 1;
-      this.search_container.before('<li class="search-choice" id="' + choice_id + '"><span>' + item.html + '</span><a href="javascript:void(0)" class="search-choice-close" rel="' + item.array_index + '"></a></li>');
+      this.search_container.before('<li class="search-choice" id="' + choice_id + '"><span>' + item.without_description + '</span><a href="javascript:void(0)" class="search-choice-close" rel="' + item.array_index + '"></a></li>');
       link = $('#' + choice_id).find("a").first();
       return link.click(function(evt) {
         return _this.choice_destroy_link_click(evt);
@@ -757,17 +759,16 @@ Copyright (c) 2011 by Harvest
               }
             }
             if (found) {
-              if (searchText.length) {
-                startpos = option.html.search(zregex);
-                text = option.html.substr(0, startpos + searchText.length) + '</em>' + option.html.substr(startpos + searchText.length);
-                text = text.substr(0, startpos) + '<em>' + text.substr(startpos);
-              } else {
-                text = option.html;
-              }
-              result.html(text);
               this.result_activate(result);
-              if (option.group_array_index != null) {
-                $("#" + this.results_data[option.group_array_index].dom_id).css('display', 'list-item');
+              if (this.highlight_matched_text) {
+                if (searchText.length) {
+                  startpos = option.html.search(zregex);
+                  text = option.html.substr(0, startpos + searchText.length) + '</em>' + option.html.substr(startpos + searchText.length);
+                  text = text.substr(0, startpos) + '<em>' + text.substr(startpos);
+                } else {
+                  text = option.html;
+                }
+                result.html(text);
               }
             } else {
               if (this.result_highlight && result_id === this.result_highlight.attr('id')) {

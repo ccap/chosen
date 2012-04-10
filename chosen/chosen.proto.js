@@ -53,7 +53,8 @@
             options_index: this.options_index,
             value: option.value,
             text: option.text,
-            html: option.innerHTML,
+            without_description: option.innerHTML,
+            html: option.innerHTML + " - " + option.dataset["description"],
             selected: option.selected,
             disabled: group_disabled === true ? group_disabled : option.disabled,
             group_array_index: group_position,
@@ -130,7 +131,8 @@ Copyright (c) 2011 by Harvest
       this.allow_single_deselect = (this.options.allow_single_deselect != null) && (this.form_field.options[0] != null) && this.form_field.options[0].text === "" ? this.options.allow_single_deselect : false;
       this.disable_search_threshold = this.options.disable_search_threshold || 0;
       this.choices = 0;
-      return this.results_none_found = this.options.no_results_text || "No results match";
+      this.results_none_found = this.options.no_results_text || "No results match";
+      return this.higlight_matched_text = this.options.highlight_matched_text != null ? this.options.highlight_matched_text : true;
     };
 
     AbstractChosen.prototype.mouse_enter = function() {
@@ -757,19 +759,16 @@ Copyright (c) 2011 by Harvest
               }
             }
             if (found) {
-              if (searchText.length) {
-                startpos = option.html.search(zregex);
-                text = option.html.substr(0, startpos + searchText.length) + '</em>' + option.html.substr(startpos + searchText.length);
-                text = text.substr(0, startpos) + '<em>' + text.substr(startpos);
-              } else {
-                text = option.html;
-              }
-              if ($(result_id).innerHTML !== text) $(result_id).update(text);
               this.result_activate($(result_id));
-              if (option.group_array_index != null) {
-                $(this.results_data[option.group_array_index].dom_id).setStyle({
-                  display: 'list-item'
-                });
+              if (this.highlight_matched_text) {
+                if (searchText.length) {
+                  startpos = option.html.search(zregex);
+                  text = option.html.substr(0, startpos + searchText.length) + '</em>' + option.html.substr(startpos + searchText.length);
+                  text = text.substr(0, startpos) + '<em>' + text.substr(startpos);
+                } else {
+                  text = option.html;
+                }
+                if ($(result_id).innerHTML !== text) $(result_id).update(text);
               }
             } else {
               if ($(result_id) === this.result_highlight) {
