@@ -45,16 +45,18 @@
     };
 
     SelectParser.prototype.add_option = function(option, group_position, group_disabled) {
+      var html;
       if (option.nodeName === "OPTION") {
         if (option.text !== "") {
           if (group_position != null) this.parsed[group_position].children += 1;
+          html = option.innerHTML + (option.dataset["description"] != null ? " - " + option.dataset["description"] : "");
           this.parsed.push({
             array_index: this.parsed.length,
             options_index: this.options_index,
             value: option.value,
             text: option.text,
             without_description: option.innerHTML,
-            html: option.innerHTML + " - " + option.dataset["description"],
+            html: html,
             selected: option.selected,
             disabled: group_disabled === true ? group_disabled : option.disabled,
             group_array_index: group_position,
