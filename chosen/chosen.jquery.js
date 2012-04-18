@@ -919,6 +919,9 @@ Copyright (c) 2011 by Harvest
         this.search_field.css({
           'width': w + 'px'
         });
+        this.search_field.parent().parent().css({
+          'width': this.f_width + 'px'
+        });
         dd_top = this.container.height();
         return this.dropdown.css({
           "top": dd_top + "px"
