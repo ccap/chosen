@@ -30,7 +30,7 @@ class Chosen extends AbstractChosen
     @container_id = if @form_field.id.length then @form_field.id.replace(/[^\w]/g, '_') else this.generate_field_id()
     @container_id += "_chzn"
 
-    @f_width = @form_field_jq.outerWidth()
+    @f_width = @form_field_jq.outerWidth() + 10
 
     container_div = ($ "<div />", {
       id: @container_id
