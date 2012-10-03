@@ -570,6 +570,7 @@ class Chosen extends AbstractChosen
         w = @f_width - 10
 
       @search_field.css({'width': w + 'px'})
+      @search_field.parent().parent().css({'width': @f_width + 'px'})
 
       dd_top = @container.height()
       @dropdown.css({"top":  dd_top + "px"})
