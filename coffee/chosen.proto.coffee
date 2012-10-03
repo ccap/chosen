@@ -362,7 +362,7 @@ class Chosen extends AbstractChosen
       
       @form_field.simulate("change") if typeof Event.simulate is 'function' && (@is_multiple || @form_field.value != @current_value)
       @current_value = @form_field.value
-      
+      @search_field.focus()
       this.search_field_scale()
 
   result_activate: (el) ->
