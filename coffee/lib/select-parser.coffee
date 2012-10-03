@@ -25,12 +25,14 @@ class SelectParser
       if option.text != ""
         if group_position?
           @parsed[group_position].children += 1
+        html = (if option.dataset["description"]? then option.dataset["description"] else option.innerHTML)
         @parsed.push
           array_index: @parsed.length
           options_index: @options_index
           value: option.value
           text: option.text
-          html: option.innerHTML
+          without_description: option.innerHTML
+          html: html
           selected: option.selected
           disabled: if group_disabled is true then group_disabled else option.disabled
           group_array_index: group_position

@@ -303,9 +303,9 @@ class Chosen extends AbstractChosen
     choice_id = @container_id + "_c_" + item.array_index
     @choices += 1
     if item.disabled
-      html = '<li class="search-choice search-choice-disabled" id="' + choice_id + '"><span>' + item.html + '</span></li>'
+      html = '<li class="search-choice search-choice-disabled" id="' + choice_id + '"><span>' + item.without_description + '</span></li>'
     else
-      html = '<li class="search-choice" id="' + choice_id + '"><span>' + item.html + '</span><a href="javascript:void(0)" class="search-choice-close" rel="' + item.array_index + '"></a></li>'
+      html = '<li class="search-choice" id="' + choice_id + '"><span>' + item.without_description + '</span><a href="javascript:void(0)" class="search-choice-close" rel="' + item.array_index + '"></a></li>'
     @search_container.before  html
     link = $('#' + choice_id).find("a").first()
     link.click (evt) => this.choice_destroy_link_click(evt)
