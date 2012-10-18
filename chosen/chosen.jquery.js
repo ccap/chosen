@@ -170,7 +170,9 @@ Copyright (c) 2011 by Harvest
           }), 50);
         }
       } else {
-        if (!this.active_field) return this.activate_field();
+        if (!this.active_field) {
+          return this.activate_field();
+        }
       }
     };
 
