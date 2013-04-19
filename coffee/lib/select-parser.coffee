@@ -25,7 +25,7 @@ class SelectParser
       if option.text != ""
         if group_position?
           @parsed[group_position].children += 1
-        html = (if option.dataset["description"]? then option.dataset["description"] else option.innerHTML)
+        html = (if option.getAttribute("data-description")? then option.getAttribute("data-description") else option.innerHTML)
         @parsed.push
           array_index: @parsed.length
           options_index: @options_index
