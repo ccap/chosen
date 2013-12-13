@@ -422,17 +422,24 @@ class Chosen extends AbstractChosen
           result_id = option.dom_id
           result = $("#" + result_id)
 
-          if regex.test option.html
-            found = true
-            results += 1
-          else if @enable_split_word_search and (option.html.indexOf(" ") >= 0 or option.html.indexOf("[") == 0)
-            #TODO: replace this substitution of /\[\]/ with a list of characters to skip.
-            parts = option.html.replace(/\[|\]/g, "").split(" ")
-            if parts.length
-              for part in parts
-                if regex.test part
-                  found = true
-                  results += 1
+          code = if @search_coded then option.html.match(/(\w+)\s-\s.*/)[1] else undefined
+
+          if searchText.length > 0 && searchText.length <= code.length
+            if searchText.toUpperCase() == code
+              found = true
+              results += 1
+          else
+            if regex.test option.html
+              found = true
+              results += 1
+            else if @enable_split_word_search and (option.html.indexOf(" ") >= 0 or option.html.indexOf("[") == 0)
+              #TODO: replace this substitution of /\[\]/ with a list of characters to skip.
+              parts = option.html.replace(/\[|\]/g, "").split(" ")
+              if parts.length
+                for part in parts
+                  if regex.test part
+                    found = true
+                    results += 1
 
           if found
             if searchText.length
@@ -533,7 +540,7 @@ class Chosen extends AbstractChosen
         break
       when 9
         this.result_select(evt) if this.results_showing and not @is_multiple
-        @mouse_on_container = false
+        @mouse_on_container = true
         break
       when 13
         evt.preventDefault()
