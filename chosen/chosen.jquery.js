@@ -839,7 +839,7 @@ Copyright (c) 2011 by Harvest
     };
 
     Chosen.prototype.winnow_results = function() {
-      var code, found, option, part, parts, regex, regexAnchor, result, result_id, results, searchText, startpos, text, zregex, _i, _j, _len, _len1, _ref;
+      var code, code_matches, found, option, part, parts, regex, regexAnchor, result, result_id, results, searchText, startpos, text, zregex, _i, _j, _len, _len1, _ref;
       this.no_results_clear();
       results = 0;
       searchText = this.search_field.val() === this.default_text ? "" : $('<div/>').text($.trim(this.search_field.val())).html();
@@ -856,8 +856,9 @@ Copyright (c) 2011 by Harvest
             found = false;
             result_id = option.dom_id;
             result = $("#" + result_id);
-            code = this.search_coded ? option.html.match(/(\w+)\s-\s.*/)[1] : void 0;
-            if (searchText.length > 0 && searchText.length <= code.length) {
+            code_matches = option.html.match(/(\w+)\s-\s.*/);
+            code = this.search_coded && searchText.length > 0 && code_matches && code_matches.length > 1 && code_matches[1];
+            if (code && searchText.length <= code.length) {
               if (searchText.toUpperCase() === code) {
                 found = true;
                 results += 1;

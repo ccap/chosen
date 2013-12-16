@@ -422,9 +422,10 @@ class Chosen extends AbstractChosen
           result_id = option.dom_id
           result = $("#" + result_id)
 
-          code = if @search_coded then option.html.match(/(\w+)\s-\s.*/)[1] else undefined
+          code_matches = option.html.match(/(\w+)\s-\s.*/)
+          code = @search_coded && searchText.length > 0 && code_matches && code_matches.length > 1 && code_matches[1]
 
-          if searchText.length > 0 && searchText.length <= code.length
+          if code && searchText.length <= code.length
             if searchText.toUpperCase() == code
               found = true
               results += 1
