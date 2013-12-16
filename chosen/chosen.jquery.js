@@ -859,7 +859,7 @@ Copyright (c) 2011 by Harvest
             code_matches = option.html.match(/(\w+)\s-\s.*/);
             code = this.search_coded && searchText.length > 0 && code_matches && code_matches.length > 1 && code_matches[1];
             if (code && searchText.length <= code.length) {
-              if (searchText.toUpperCase() === code) {
+              if (searchText.toUpperCase() === code.toUpperCase()) {
                 found = true;
                 results += 1;
               }
@@ -1022,9 +1022,10 @@ Copyright (c) 2011 by Harvest
           this.backstroke_length = this.search_field.val().length;
           break;
         case 9:
-          if (this.results_showing && !this.is_multiple) {
+          if (this.results_showing && this.search_field.val() !== "" && this.search_field.val() !== this.current_value) {
             this.result_select(evt);
           }
+          this.close_field();
           this.mouse_on_container = true;
           break;
         case 13:

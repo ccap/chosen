@@ -426,7 +426,7 @@ class Chosen extends AbstractChosen
           code = @search_coded && searchText.length > 0 && code_matches && code_matches.length > 1 && code_matches[1]
 
           if code && searchText.length <= code.length
-            if searchText.toUpperCase() == code
+            if searchText.toUpperCase() == code.toUpperCase()
               found = true
               results += 1
           else
@@ -540,7 +540,8 @@ class Chosen extends AbstractChosen
         @backstroke_length = this.search_field.val().length
         break
       when 9
-        this.result_select(evt) if this.results_showing and not @is_multiple
+        this.result_select(evt) if this.results_showing && this.search_field.val() != "" && this.search_field.val() != @current_value
+        this.close_field()
         @mouse_on_container = true
         break
       when 13
