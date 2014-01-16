@@ -213,7 +213,7 @@ class AbstractChosen
       else this.results_search()
 
   container_width: ->
-    return if @options.width? then @options.width else "#{@form_field.offsetWidth}px"
+    return if @options.width? then @options.width else "#{@form_field.offsetWidth + 10}px"
 
   include_option_in_results: (option) ->
     return false if @is_multiple and (not @display_selected_options and option.selected)
