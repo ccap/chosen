@@ -366,7 +366,7 @@ class Chosen extends AbstractChosen
       this.single_deselect_control_build()
       @selected_item.removeClass("chosen-default")
 
-    @selected_item.find("span").html data.text.replace("&lt;br&gt;", "<br>")
+    @selected_item.find("span").html(text)
 
   result_deselect: (pos) ->
     result_data = @results_data[pos]
